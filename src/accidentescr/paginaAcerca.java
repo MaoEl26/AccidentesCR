@@ -11,12 +11,13 @@ import java.awt.Color;
  *
  * @author mcv26
  */
-public class paginaInicio extends javax.swing.JFrame {
+public class paginaAcerca extends javax.swing.JFrame {
 
     /**
-     * Creates new form paginaInicio
+     * Creates new form paginaAcerda
      */
-    public paginaInicio() {
+    paginaInicio ventanaInicio;
+    public paginaAcerca(paginaInicio ventanaInicio) {
         initComponents();
         this.setTitle("Incidentes de Transito en Costa Rica");
         Color color = new Color(53,60,63);
@@ -32,28 +33,40 @@ public class paginaInicio extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         barraInicio = new javax.swing.JMenuBar();
+        pagInicio = new javax.swing.JMenu();
         consultasMenu = new javax.swing.JMenu();
         consultaMapa = new javax.swing.JMenuItem();
         consultaIndicador = new javax.swing.JMenuItem();
         consultaObserver = new javax.swing.JMenuItem();
-        acercaMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/322zDJDe_400x400.jpg"))); // NOI18N
-        jLabel1.setLabelFor(this);
-        jLabel1.setAlignmentY(0.0F);
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jTextArea1.setEditable(false);
+        jTextArea1.setBackground(new java.awt.Color(53, 60, 63));
+        jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Trajan Pro", 3, 18)); // NOI18N
+        jTextArea1.setForeground(new java.awt.Color(255, 141, 63));
+        jTextArea1.setRows(5);
+        jTextArea1.setText("Sistema Desarrollado por Estudiantes \ncurso Diseño de Software  \nTecnológico de Costa Rica \nSede San Jose\n\nIntegrantes:\nMauricio Castillo Vega\nAndre Corrales Mendéz\nEdwin Rees\nGerardo Villalobos Villalobos\n´\nProfesora: Ericka Solano");
+        jScrollPane1.setViewportView(jTextArea1);
 
         barraInicio.setBackground(new java.awt.Color(213, 214, 210));
         barraInicio.setForeground(new java.awt.Color(255, 141, 63));
         barraInicio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+
+        pagInicio.setBackground(new java.awt.Color(213, 214, 210));
+        pagInicio.setForeground(new java.awt.Color(255, 141, 63));
+        pagInicio.setText("Inicio");
+        pagInicio.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        pagInicio.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pagInicioMouseClicked(evt);
+            }
+        });
+        barraInicio.add(pagInicio);
 
         consultasMenu.setBackground(new java.awt.Color(213, 214, 210));
         consultasMenu.setForeground(new java.awt.Color(255, 141, 63));
@@ -64,6 +77,7 @@ public class paginaInicio extends javax.swing.JFrame {
         consultaMapa.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         consultaMapa.setForeground(new java.awt.Color(255, 141, 63));
         consultaMapa.setText("Mapa de Incidentes");
+        consultaMapa.setEnabled(false);
         consultaMapa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 consultaMapaActionPerformed(evt);
@@ -90,17 +104,6 @@ public class paginaInicio extends javax.swing.JFrame {
 
         barraInicio.add(consultasMenu);
 
-        acercaMenu.setBackground(new java.awt.Color(213, 214, 210));
-        acercaMenu.setForeground(new java.awt.Color(255, 141, 63));
-        acercaMenu.setText("Acerca");
-        acercaMenu.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        acercaMenu.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                acercaMenuMouseClicked(evt);
-            }
-        });
-        barraInicio.add(acercaMenu);
-
         setJMenuBar(barraInicio);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -108,87 +111,50 @@ public class paginaInicio extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(51, 51, 51)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 465, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(19, 19, 19))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void pagInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagInicioMouseClicked
+        ventanaInicio.setVisible(true);
+        ventanaInicio.setEnabled(true);;
+        this.dispose();
+    }//GEN-LAST:event_pagInicioMouseClicked
+
     private void consultaMapaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaMapaActionPerformed
         paginaMapa mapa;
-        mapa = new paginaMapa(this);
+        mapa = new paginaMapa(ventanaInicio);
         mapa.setVisible(true);
-        this.setVisible(false);
-        this.setEnabled(false);
+        this.dispose();
     }//GEN-LAST:event_consultaMapaActionPerformed
 
     private void consultaIndicadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaIndicadorActionPerformed
         paginaGrafico grafico;
-        grafico = new paginaGrafico(this);
+        grafico = new paginaGrafico(ventanaInicio);
         grafico.setVisible(true);
-        this.setVisible(false);
-        this.setEnabled(false);
+        this.dispose();
     }//GEN-LAST:event_consultaIndicadorActionPerformed
 
-    private void acercaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acercaMenuMouseClicked
-        paginaAcerca acerca;
-        acerca = new paginaAcerca(this);
-        acerca.setVisible(true);
-        this.setVisible(false);
-        this.setEnabled(false);
-    }//GEN-LAST:event_acercaMenuMouseClicked
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(paginaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(paginaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(paginaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(paginaInicio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new paginaInicio().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu acercaMenu;
     private javax.swing.JMenuBar barraInicio;
     private javax.swing.JMenuItem consultaIndicador;
     private javax.swing.JMenuItem consultaMapa;
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JMenu pagInicio;
     // End of variables declaration//GEN-END:variables
 }

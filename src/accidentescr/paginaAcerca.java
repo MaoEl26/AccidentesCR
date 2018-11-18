@@ -99,7 +99,12 @@ public class paginaAcerca extends javax.swing.JFrame {
         consultaObserver.setBackground(new java.awt.Color(213, 214, 210));
         consultaObserver.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         consultaObserver.setForeground(new java.awt.Color(255, 141, 63));
-        consultaObserver.setText("Observer");
+        consultaObserver.setText("Estadisticas dinámicas ");
+        consultaObserver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                consultaObserverActionPerformed(evt);
+            }
+        });
         consultasMenu.add(consultaObserver);
 
         barraInicio.add(consultasMenu);
@@ -145,6 +150,14 @@ public class paginaAcerca extends javax.swing.JFrame {
         grafico.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_consultaIndicadorActionPerformed
+
+    private void consultaObserverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_consultaObserverActionPerformed
+        // TODO add your handling code here:
+        paginaEstadistica estadistica;
+        estadistica = new paginaEstadistica(ventanaInicio);
+        estadistica.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_consultaObserverActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

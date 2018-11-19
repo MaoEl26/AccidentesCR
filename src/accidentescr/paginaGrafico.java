@@ -6,6 +6,11 @@
 package accidentescr;
 
 import java.awt.Color;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
@@ -17,6 +22,7 @@ public class paginaGrafico extends javax.swing.JFrame {
      * Creates new form paginaGrafico
      */
     private paginaInicio ventanaInicio;
+    DefaultCategoryDataset dataset;
     public paginaGrafico(paginaInicio ventanaInicio) {
         initComponents();
         this.setTitle("Incidentes de Transito en Costa Rica");
@@ -39,8 +45,7 @@ public class paginaGrafico extends javax.swing.JFrame {
         labelInvolucrados = new javax.swing.JLabel();
         listInvolucrados = new java.awt.List();
         btnBuscar = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        panelGrafico = new javax.swing.JPanel();
         barraInicio = new javax.swing.JMenuBar();
         pagInicio = new javax.swing.JMenu();
         consultasMenu = new javax.swing.JMenu();
@@ -51,6 +56,7 @@ public class paginaGrafico extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(53, 60, 63));
+        setResizable(false);
 
         labelRangoTiempo.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
         labelRangoTiempo.setForeground(new java.awt.Color(255, 141, 63));
@@ -74,26 +80,17 @@ public class paginaGrafico extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBackground(new java.awt.Color(240, 244, 191));
+        panelGrafico.setBackground(new java.awt.Color(117, 104, 103));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jTextField1.setText("Cuadro Provisional AQUI MAPA");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+        javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
+        panelGrafico.setLayout(panelGraficoLayout);
+        panelGraficoLayout.setHorizontalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 658, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        panelGraficoLayout.setVerticalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         barraInicio.setBackground(new java.awt.Color(213, 214, 210));
@@ -182,16 +179,12 @@ public class paginaGrafico extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(labelInvolucrados)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(18, 18, 18))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(panelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(25, 25, 25))
             .addGroup(layout.createSequentialGroup()
                 .addGap(148, 148, 148)
                 .addComponent(labelRangoTiempo)
@@ -204,6 +197,10 @@ public class paginaGrafico extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(193, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -231,6 +228,22 @@ public class paginaGrafico extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+       /*Enviar datos y obtener resultset*/ 
+       boolean retorno = false;///condicion temporal
+       int largoRESULTSET = 0;//temporal.....
+       if(!retorno){
+           dataset = new DefaultCategoryDataset();
+           for (int i = 0; i < largoRESULTSET ; i++) {
+               dataset.setValue(i, "Variable de comparación 1", 
+                       "Variable de comparación 2"); //i sería el count resultante
+           }
+           
+           JFreeChart grafico = ChartFactory.createBarChart3D("title", "categoryAxisLabel", 
+                   "valueAxisLabel", dataset, PlotOrientation.HORIZONTAL, true, false, false);
+           ChartPanel panel = new ChartPanel(grafico);
+           panelGrafico.add(panel);
+           panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
+      }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void acercaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acercaMenuMouseClicked
@@ -257,12 +270,11 @@ public class paginaGrafico extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultaMapa;
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelInvolucrados;
     private javax.swing.JLabel labelRangoTiempo;
     private java.awt.List listInvolucrados;
     private java.awt.List listRangoTiempo;
     private javax.swing.JMenu pagInicio;
+    private javax.swing.JPanel panelGrafico;
     // End of variables declaration//GEN-END:variables
 }

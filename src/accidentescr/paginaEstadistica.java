@@ -38,6 +38,7 @@ public class paginaEstadistica extends javax.swing.JFrame {
         acercaMenu = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         barraInicio.setBackground(new java.awt.Color(213, 214, 210));
         barraInicio.setForeground(new java.awt.Color(255, 141, 63));

@@ -65,6 +65,7 @@ public class paginaMapa extends javax.swing.JFrame {
         setAlwaysOnTop(true);
         setBackground(new java.awt.Color(53, 60, 63));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         labelProvincia.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
         labelProvincia.setForeground(new java.awt.Color(255, 141, 63));
@@ -114,7 +115,7 @@ public class paginaMapa extends javax.swing.JFrame {
 
         listRangoEdad.setMultipleMode(true);
 
-        jPanel1.setBackground(new java.awt.Color(240, 244, 191));
+        jPanel1.setBackground(new java.awt.Color(117, 104, 103));
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField1.setText("Cuadro Provisional AQUI MAPA");

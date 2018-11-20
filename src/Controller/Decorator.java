@@ -9,11 +9,18 @@ package Controller;
  *
  * @author andre
  */
-public class Decorator implements Consulta1{
+public abstract class Decorator implements Consulta1{
+    
+    protected Consulta1 consulta1;
+    
+    public Decorator(Consulta1 c1){
+        this.consulta1 = c1;
+    }
 
     @Override
     public void crearConsulta(DTOConsulta1 dtoConsulta1) {
-        
+        consulta1.crearConsulta(dtoConsulta1);
     }
+    
     
 }

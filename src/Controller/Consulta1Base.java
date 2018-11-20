@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,13 +22,15 @@ public class Consulta1Base implements Consulta1{
         ArrayList<String> listaDistritos = dtoConsulta1.getListaDistritos();
         ArrayList<String> listaCantones = dtoConsulta1.getListaCantones();
         ArrayList<String> listaProvincias = dtoConsulta1.getListaProvincias();
-        ArrayList<String> listaConsultas = dtoConsulta1.getListaConsultasSQL();
+        ArrayList<ArrayList<String>> listaConsultas = dtoConsulta1.getListaConsultasSQL();
+                
         
         int largoDistritos = listaDistritos.size();
         int largoCantones = listaCantones.size();
         int largoProvincias = listaProvincias.size();
         
         String consultaSQL="";
+        String where="";
         
         
         if(largoDistritos>=1){        
@@ -37,12 +40,17 @@ public class Consulta1Base implements Consulta1{
                                 + "on dist.idDistrito = inc.idDistrito "
                                 + "inner join fecha fec "
                                 + "on fec.idFecha = inc.idFecha "
-                                + "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
+                                + "inner join afectado afec" 
+                                + "on afec.idAfectado = inc.idAfectado "; 
+            
+            where=where   + "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
         
             for (int i=0; i<largoDistritos; i++){
-                String consultaFinal="";
-                consultaFinal=consultaSQL+" and dist.Distrito = "+listaDistritos.get(i);
-                listaConsultas.add(consultaFinal);
+                ArrayList<String> listaTemp = new ArrayList<>();
+                String whereSQL=where+" and dist.Distrito = "+listaDistritos.get(i);    
+                listaTemp.add(consultaSQL);
+                listaTemp.add(whereSQL);
+                listaConsultas.add(listaTemp);
             }
         }
         else if(largoCantones>=1){
@@ -53,13 +61,16 @@ public class Consulta1Base implements Consulta1{
                                     + "inner join canton cant "
                                     + "on cant.idCanton = dist.idCanton "
                                     + "inner join fecha fec "
-                                    + "on fec.idFecha = inc.idFecha "
-                                    + "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
+                                    + "on fec.idFecha = inc.idFecha ";
+                    
+            where=where + "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
             
             for (int i=0; i<largoCantones; i++){
-                String consultaFinal="";
-                consultaFinal=consultaSQL+" and cant.Canton = "+listaCantones.get(i);
-                listaConsultas.add(consultaFinal);
+                ArrayList<String> listaTemp = new ArrayList<>();
+                String whereSQL=where+" and cant.Canton = "+listaCantones.get(i);
+                listaTemp.add(consultaSQL);
+                listaTemp.add(whereSQL);
+                listaConsultas.add(listaTemp);
             }
         }
         else{
@@ -72,14 +83,18 @@ public class Consulta1Base implements Consulta1{
                                     + "inner join pronvinca prov "
                                     + "on prov.idProvincia = cant.idProvincia "
                                     + "inner join fecha fec "
-                                    + "on fec.idFecha = inc.idFecha "
-                                    + "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
+                                    + "on fec.idFecha = inc.idFecha ";
+            
+            where=where+ "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
             for (int i=0; i<largoProvincias; i++){
-                String consultaFinal="";
-                consultaFinal=consultaSQL+" and prov.Provincia = "+listaProvincias.get(i);
-                listaConsultas.add(consultaFinal);
+                ArrayList<String> listaTemp = new ArrayList<>();
+                String whereSQL=where+" and prov.Provincia = "+listaProvincias.get(i);
+                listaTemp.add(consultaSQL);
+                listaTemp.add(whereSQL);
+                listaConsultas.add(listaTemp);
             }
-        }   
+        }
+        dtoConsulta1.setListaConsultasSQL(listaConsultas);
     }
     
     

@@ -45,9 +45,10 @@ public class paginaInicio extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/322zDJDe_400x400.jpg"))); // NOI18N
-        jLabel1.setLabelFor(this);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo2.jpg"))); // NOI18N
+        jLabel1.setLabelFor(jLabel1);
         jLabel1.setAlignmentY(0.0F);
+        jLabel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 141, 63), 3, true));
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -115,8 +116,8 @@ public class paginaInicio extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(87, 87, 87)
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
-                .addGap(77, 77, 77))
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 515, Short.MAX_VALUE)
+                .addGap(81, 81, 81))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

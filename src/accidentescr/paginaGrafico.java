@@ -5,7 +5,14 @@
  */
 package accidentescr;
 
+import Conexion.BDConexion;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -229,17 +236,36 @@ public class paginaGrafico extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
        /*Enviar datos y obtener resultset*/ 
-       boolean retorno = false;///condicion temporal
-       int largoRESULTSET = 0;//temporal.....
-       if(!retorno){
+       boolean retorno = false;
+       Connection conexionBD;
+       PreparedStatement statement;
+       ResultSet rs = null;//esto es lo que necesito para trabajar....
+        try {
+            String sql = "select count(a.idAfectado),l.tipo,s.Sexo from afectado a inner join lesion l on a.idLesion = l.idLesion inner join sexo s on s.idSexo = a.idSexo group by l.tipo,s.Sexo";
+            conexionBD = BDConexion.obtenerConexion();
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            retorno = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+       if(retorno){
            dataset = new DefaultCategoryDataset();
-           for (int i = 0; i < largoRESULTSET ; i++) {
-               dataset.setValue(i, "Variable de comparación 1", 
-                       "Variable de comparación 2"); //i sería el count resultante
+           try {
+               while(rs.next()){
+                   dataset.setValue(rs.getInt(1), rs.getString(2),
+                           rs.getString(3));//pos 1 count, pos 2 barra, pos 3 indicador
+               }
+           } catch (SQLException ex) {
+               Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
            }
            
-           JFreeChart grafico = ChartFactory.createBarChart3D("title", "categoryAxisLabel", 
-                   "valueAxisLabel", dataset, PlotOrientation.HORIZONTAL, true, false, false);
+           JFreeChart grafico = ChartFactory.createBarChart3D("Gráfico por tipor de indicador", 
+                   "Indicador", 
+                   "Cantidad de incidencias", dataset, PlotOrientation.HORIZONTAL, true, false, false);
            ChartPanel panel = new ChartPanel(grafico);
            panelGrafico.add(panel);
            panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());

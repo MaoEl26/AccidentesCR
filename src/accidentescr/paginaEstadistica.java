@@ -5,6 +5,19 @@
  */
 package accidentescr;
 
+import Conexion.BDConexion;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
 /**
  *
  * @author mcv26
@@ -15,8 +28,12 @@ public class paginaEstadistica extends javax.swing.JFrame {
      * Creates new form paginaEstadistica
      */
     paginaInicio ventanaInicio;
+    DefaultCategoryDataset dataset;
     public paginaEstadistica(paginaInicio ventanaInicio) {
         initComponents();
+        this.setTitle("Incidentes de Transito en Costa Rica");
+        Color color = new Color(53,60,63);
+        this.getContentPane().setBackground(color);
         this.ventanaInicio = ventanaInicio;
     }
 
@@ -29,6 +46,10 @@ public class paginaEstadistica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        labelRangoTiempo = new javax.swing.JLabel();
+        listRangoTiempo = new java.awt.List();
+        btnBuscar = new javax.swing.JButton();
+        panelGrafico = new javax.swing.JPanel();
         barraInicio = new javax.swing.JMenuBar();
         pagInicio = new javax.swing.JMenu();
         consultasMenu = new javax.swing.JMenu();
@@ -39,6 +60,35 @@ public class paginaEstadistica extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+
+        labelRangoTiempo.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
+        labelRangoTiempo.setForeground(new java.awt.Color(255, 141, 63));
+        labelRangoTiempo.setText("Tipo Indicador");
+
+        listRangoTiempo.setMultipleMode(true);
+
+        btnBuscar.setBackground(new java.awt.Color(213, 214, 210));
+        btnBuscar.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 141, 63));
+        btnBuscar.setText("Consultar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        panelGrafico.setBackground(new java.awt.Color(117, 104, 103));
+
+        javax.swing.GroupLayout panelGraficoLayout = new javax.swing.GroupLayout(panelGrafico);
+        panelGrafico.setLayout(panelGraficoLayout);
+        panelGraficoLayout.setHorizontalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 657, Short.MAX_VALUE)
+        );
+        panelGraficoLayout.setVerticalGroup(
+            panelGraficoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 493, Short.MAX_VALUE)
+        );
 
         barraInicio.setBackground(new java.awt.Color(213, 214, 210));
         barraInicio.setForeground(new java.awt.Color(255, 141, 63));
@@ -113,11 +163,37 @@ public class paginaEstadistica extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 659, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(labelRangoTiempo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(18, 18, 18)
+                .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 491, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(labelRangoTiempo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -158,13 +234,56 @@ public class paginaEstadistica extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_acercaMenuMouseClicked
 
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+        /*Enviar datos y obtener resultset*/
+        boolean retorno = false;
+        Connection conexionBD;
+        PreparedStatement statement;
+        ResultSet rs = null;//esto es lo que necesito para trabajar....
+        try {
+            String sql = "select count(a.idAfectado),l.tipo,s.Sexo from afectado a inner join lesion l on a.idLesion = l.idLesion inner join sexo s on s.idSexo = a.idSexo group by l.tipo,s.Sexo";
+            conexionBD = BDConexion.obtenerConexion();
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            retorno = true;
+        } catch (SQLException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        if(retorno){
+            dataset = new DefaultCategoryDataset();
+            try {
+                while(rs.next()){
+                    dataset.setValue(rs.getInt(1), rs.getString(2),
+                        rs.getString(3));//pos 1 count, pos 2 barra, pos 3 indicador
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFreeChart grafico = ChartFactory.createBarChart3D("Gráfico por tipor de indicador",
+                "Indicador",
+                "Cantidad de incidencias", dataset, PlotOrientation.HORIZONTAL, true, false, false);
+            ChartPanel panel = new ChartPanel(grafico);
+            panelGrafico.add(panel);
+            panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu acercaMenu;
     private javax.swing.JMenuBar barraInicio;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JMenuItem consultaIndicador;
     private javax.swing.JMenuItem consultaMapa;
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
+    private javax.swing.JLabel labelRangoTiempo;
+    private java.awt.List listRangoTiempo;
     private javax.swing.JMenu pagInicio;
+    private javax.swing.JPanel panelGrafico;
     // End of variables declaration//GEN-END:variables
 }

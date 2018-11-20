@@ -10,14 +10,14 @@ import java.sql.*;
  *
  * @author mcv26
  */
-public class conexion {
+public class BDConexion {
     private static Connection conexionBD = null;
-    private final String driver = "com.mysql.jdbc.Driver";
-    private final String database = "jdbc:mysql://localhost/accidentescr";
-    private final String usuario = "root";
-    private final String pass = "root";
+    private static final String driver = "com.mysql.jdbc.Driver";
+    private static final String database = "jdbc:mysql://localhost/accidentescr";
+    private static final String usuario = "root";
+    private static final String pass = "root";
     
-    public Connection obtenerConexion() throws SQLException, ClassNotFoundException{
+    public static Connection obtenerConexion() throws SQLException, ClassNotFoundException{
         if(conexionBD == null){
             try{
                 Class.forName(driver);

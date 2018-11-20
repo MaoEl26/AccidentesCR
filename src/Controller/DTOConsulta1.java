@@ -19,17 +19,17 @@ public class DTOConsulta1 {
     private int annoInicial;
     private int annoFinal;
     private ArrayList<String> listaIndicadores;
-    private String consultaSQL;
+    private ArrayList<String> listaConsultasSQL;
     private ArrayList<String> listaRespuestas;
 
-    public DTOConsulta1(ArrayList<String> listaProvincias, ArrayList<String> listaCantones, ArrayList<String> listaDistritos, int annoInicial, int annoFinal, ArrayList<String> listaIndicadores, String consultaSQL, ArrayList<String> listaRespuestas) {
+    public DTOConsulta1(ArrayList<String> listaProvincias, ArrayList<String> listaCantones, ArrayList<String> listaDistritos, int annoInicial, int annoFinal, ArrayList<String> listaIndicadores, ArrayList<String> listaConsultasSQL, ArrayList<String> listaRespuestas) {
         this.listaProvincias = listaProvincias;
         this.listaCantones = listaCantones;
         this.listaDistritos = listaDistritos;
         this.annoInicial = annoInicial;
         this.annoFinal = annoFinal;
         this.listaIndicadores = listaIndicadores;
-        this.consultaSQL = consultaSQL;
+        this.listaConsultasSQL = listaConsultasSQL;
         this.listaRespuestas = listaRespuestas;
     }
     
@@ -83,12 +83,12 @@ public class DTOConsulta1 {
         this.listaIndicadores = listaIndicadores;
     }
 
-    public String getConsultaSQL() {
-        return consultaSQL;
+    public ArrayList<String> getListaConsultasSQL() {
+        return listaConsultasSQL;
     }
 
-    public void setConsultaSQL(String consultaSQL) {
-        this.consultaSQL = consultaSQL;
+    public void setListaConsultasSQL(ArrayList<String> listaConsultasSQL) {
+        this.listaConsultasSQL = listaConsultasSQL;
     }
 
     public ArrayList<String> getListaRespuestas() {

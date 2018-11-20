@@ -151,7 +151,7 @@
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Imagenes/322zDJDe_400x400.jpg"/>
+          <Image iconType="2" name="C:\Users\reese\Documents\NetBeansProjects\accidentescr\src\Imagenes\322zDJDe_400x400.jpg"/>
         </Property>
         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
           <ComponentRef name="Form"/>

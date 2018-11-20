@@ -50,7 +50,7 @@ public class paginaMapa extends javax.swing.JFrame {
         listTipoLesion = new java.awt.List();
         labelRangoEdad = new javax.swing.JLabel();
         listRangoEdad = new java.awt.List();
-        jPanel1 = new javax.swing.JPanel();
+        jPanelMap = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         barraInicio = new javax.swing.JMenuBar();
@@ -115,23 +115,23 @@ public class paginaMapa extends javax.swing.JFrame {
 
         listRangoEdad.setMultipleMode(true);
 
-        jPanel1.setBackground(new java.awt.Color(117, 104, 103));
+        jPanelMap.setBackground(new java.awt.Color(117, 104, 103));
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jTextField1.setText("Cuadro Provisional AQUI MAPA");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelMapLayout = new javax.swing.GroupLayout(jPanelMap);
+        jPanelMap.setLayout(jPanelMapLayout);
+        jPanelMapLayout.setHorizontalGroup(
+            jPanelMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMapLayout.createSequentialGroup()
                 .addGap(187, 187, 187)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        jPanelMapLayout.setVerticalGroup(
+            jPanelMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelMapLayout.createSequentialGroup()
                 .addGap(129, 129, 129)
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(317, Short.MAX_VALUE))
@@ -238,7 +238,7 @@ public class paginaMapa extends javax.swing.JFrame {
                                 .addGap(42, 42, 42)
                                 .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(32, 32, 32)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanelMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(labelRangoTiempo)
@@ -301,7 +301,7 @@ public class paginaMapa extends javax.swing.JFrame {
                         .addComponent(listRangoEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanelMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
 
@@ -316,6 +316,16 @@ public class paginaMapa extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+        this.setAlwaysOnTop(false);
+        Mapa mapa;
+        mapa = new Mapa("Prueba");
+        mapa.setVisible(true);
+        
+        /*paginaMapa mapa;
+        mapa = new paginaMapa(this);
+        mapa.setVisible(true);
+        this.setVisible(false);
+        this.setEnabled(false);*/
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void pagInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagInicioMouseClicked
@@ -358,7 +368,7 @@ public class paginaMapa extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultaMapa;
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanelMap;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelCanton;
     private javax.swing.JLabel labelDistrito;

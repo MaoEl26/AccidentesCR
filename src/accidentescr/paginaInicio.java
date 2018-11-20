@@ -45,7 +45,7 @@ public class paginaInicio extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/322zDJDe_400x400.jpg"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\reese\\Documents\\NetBeansProjects\\accidentescr\\src\\Imagenes\\322zDJDe_400x400.jpg")); // NOI18N
         jLabel1.setLabelFor(this);
         jLabel1.setAlignmentY(0.0F);
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));

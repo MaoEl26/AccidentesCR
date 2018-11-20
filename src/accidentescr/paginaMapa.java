@@ -5,7 +5,9 @@
  */
 package accidentescr;
 
+import Model.RespuestaConsulta1;
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  *
@@ -318,7 +320,13 @@ public class paginaMapa extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setAlwaysOnTop(false);
         Mapa mapa;
-        mapa = new Mapa("Prueba");
+        RespuestaConsulta1 res = new RespuestaConsulta1("9 56 11","-84 4 28", 2);
+        RespuestaConsulta1 res2 = new RespuestaConsulta1("09 54 00","-84 04 01", 5);
+        ArrayList arr = new ArrayList<RespuestaConsulta1>();
+        arr.add(res);
+        arr.add(res2);
+        mapa = new Mapa("Prueba",arr);
+        System.out.println("vo");
         mapa.setVisible(true);
         
         /*paginaMapa mapa;

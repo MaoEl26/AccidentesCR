@@ -5,6 +5,7 @@
  */
 package accidentescr;
 
+import Controller.DAOBD;
 import java.awt.Color;
 
 /**
@@ -16,13 +17,20 @@ public class paginaInicio extends javax.swing.JFrame {
     /**
      * Creates new form paginaInicio
      */
+    DAOBD daoBD = new DAOBD();
     public paginaInicio() {
         initComponents();
+        initIndicadores();
         this.setTitle("Incidentes de Transito en Costa Rica");
         Color color = new Color(53,60,63);
         this.getContentPane().setBackground(color);
     }
-
+    
+    private void initIndicadores(){
+        daoBD.setListaProvincias();
+        daoBD.setListaCantones();
+        daoBD.setListaDistritos();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -45,10 +53,10 @@ public class paginaInicio extends javax.swing.JFrame {
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo2.jpg"))); // NOI18N
-        jLabel1.setLabelFor(jLabel1);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Logo2.png"))); // NOI18N
+        jLabel1.setLabelFor(this);
         jLabel1.setAlignmentY(0.0F);
-        jLabel1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(255, 141, 63), 3, true));
+        jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 141, 63), 3));
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel1.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);

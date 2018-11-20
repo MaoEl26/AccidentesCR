@@ -11,29 +11,29 @@ package Model;
  */
 public class RespuestaConsulta1 implements Respuesta {
     
-    private int coordenadaX;
-    private int coordenadaY;
+    private String coordenadaX;
+    private String coordenadaY;
     private int count;
 
-    public RespuestaConsulta1(int coordenadaX, int coordenadaY, int count) {
+    public RespuestaConsulta1(String coordenadaX, String coordenadaY, int count) {
         this.coordenadaX = coordenadaX;
         this.coordenadaY = coordenadaY;
         this.count = count;
     }
 
-    public int getCoordenadaX() {
+    public String getCoordenadaX() {
         return coordenadaX;
     }
 
-    public void setCoordenadaX(int coordenadaX) {
+    public void setCoordenadaX(String coordenadaX) {
         this.coordenadaX = coordenadaX;
     }
 
-    public int getCoordenadaY() {
+    public String getCoordenadaY() {
         return coordenadaY;
     }
 
-    public void setCoordenadaY(int coordenadaY) {
+    public void setCoordenadaY(String coordenadaY) {
         this.coordenadaY = coordenadaY;
     }
 

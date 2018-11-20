@@ -22,6 +22,7 @@ public class paginaAcerca extends javax.swing.JFrame {
         this.setTitle("Incidentes de Transito en Costa Rica");
         Color color = new Color(53,60,63);
         this.getContentPane().setBackground(color);
+        this.ventanaInicio = ventanaInicio;
     }
 
     /**

@@ -99,6 +99,12 @@ public class Mapa extends MapView{
                         circle1.setRadius(20);
                         //co.setFillColor("#00FF00");
                         circle1.setOptions(co);
+                        MarkerLabel label1;
+                        label1 = new MarkerLabel();
+                        label1.setText(Integer.toString(res.getCount()));
+                        mark2.setLabel(label1);
+                        
+                        
                     }
                 }
             }

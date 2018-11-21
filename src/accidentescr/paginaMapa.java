@@ -318,7 +318,8 @@ public class paginaMapa extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        this.setAlwaysOnTop(false);
+        this.setAlwaysOnTop(false); //dejar este línea para que no tenga problemas con la nueva ventana de mapa
+        
         Mapa mapa;
         RespuestaConsulta1 res = new RespuestaConsulta1("9 56 11","-84 4 28", 2);
         RespuestaConsulta1 res2 = new RespuestaConsulta1("09 54 00","-84 04 01", 5);

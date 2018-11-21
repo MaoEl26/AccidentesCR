@@ -40,18 +40,16 @@ public class DAOBD {
             
             System.out.println(consultaFinal);
             
-            
             /*Aqui se llama a la base de datos con la consulta que esta en consulta Final. 
             Se puede imprimir para ver si esta bien*/
-            
             try {
                 conexionBD = BDConexion.obtenerConexion();
                 statement = conexionBD.prepareStatement(consultaFinal);             
-                rs = statement.executeQuery(); /// error aquí
+                rs = statement.executeQuery();
                 while(rs.next()){
-                    System.exit(0);
-                    String coordenadaX=rs.getString(2);  //Valor obtenido de la consulta
-                    String coordenadaY=rs.getString(3);  //Valor obtenido de la consulta
+                    
+                    String coordenadaX=rs.getString(3);  //Valor obtenido de la consulta
+                    String coordenadaY=rs.getString(2);  //Valor obtenido de la consulta
                     int count =rs.getInt(1); //Valor obtenido de la consulta
             
                     RespuestaConsulta1 res = new RespuestaConsulta1(coordenadaX, coordenadaY, count);

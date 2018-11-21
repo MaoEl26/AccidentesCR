@@ -6,6 +6,7 @@
 package Controller;
 
 import accidentescr.Mapa;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,18 +17,27 @@ public class Controlador {
     public void formularConsulta1(DTOConsulta1 dtoConsulta1){
         Consulta1Base c1Base= new Consulta1Base();
         c1Base.crearConsulta(dtoConsulta1);
+        ArrayList<ArrayList<String>> listaIndicadores = dtoConsulta1.getListaIndicadores();
         
-        Consulta1EdadQuinquenal c1EQ = new Consulta1EdadQuinquenal(c1Base);
-        c1EQ.crearConsulta(dtoConsulta1);
         
-        Consulta1Lesion c1Lesion = new Consulta1Lesion(c1Base);
-        c1Lesion.crearConsulta(dtoConsulta1);
-        
-        Consulta1Rol c1Rol = new Consulta1Rol(c1Base);
-        c1Rol.crearConsulta(dtoConsulta1);
-        
-        Consulta1Sexo c1Sexo = new Consulta1Sexo(c1Base);
-        c1Sexo.crearConsulta(dtoConsulta1);
+        for (int i=0; i<listaIndicadores.size(); i++){
+            if("EdadQuinquenal".equals(listaIndicadores.get(i).get(0))){
+                Consulta1EdadQuinquenal c1EQ = new Consulta1EdadQuinquenal(c1Base);
+                c1EQ.crearConsulta(dtoConsulta1);
+            }    
+            if("Lesion".equals(listaIndicadores.get(i).get(0))){
+                Consulta1Lesion c1Lesion = new Consulta1Lesion(c1Base);
+                c1Lesion.crearConsulta(dtoConsulta1);
+            }
+            if("Rol".equals(listaIndicadores.get(i).get(0))){
+                Consulta1Rol c1Rol = new Consulta1Rol(c1Base);
+                c1Rol.crearConsulta(dtoConsulta1);
+            }
+            if("Sexo".equals(listaIndicadores.get(i).get(0))){
+                Consulta1Sexo c1Sexo = new Consulta1Sexo(c1Base);
+                c1Sexo.crearConsulta(dtoConsulta1);
+            }
+        }
     }
     
     public void procesarConsulta1(DTOConsulta1 dtoConsulta1){
@@ -35,9 +45,9 @@ public class Controlador {
         DAOBD daoBD = new DAOBD();
         daoBD.consulta1BD(dtoConsulta1);
         
-        //Mapa mapa;
-        //mapa = new Mapa("Mapa Gráfico : Consulta 1",dtoConsulta1);
-        //mapa.setVisible(true);
+        Mapa mapa;
+        mapa = new Mapa("Mapa Gráfico : Consulta 1",dtoConsulta1);
+        mapa.setVisible(true);
     }
     
     public void formularConsulta2(DTOConsulta2 dtoConsulta2){

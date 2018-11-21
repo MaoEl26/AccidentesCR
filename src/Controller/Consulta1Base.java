@@ -47,7 +47,7 @@ public class Consulta1Base implements Consulta1{
         
             for (int i=0; i<largoDistritos; i++){
                 ArrayList<String> listaTemp = new ArrayList<>();
-                String whereSQL=where+" and dist.Distrito = "+listaDistritos.get(i);    
+                String whereSQL=where+" and dist.Distrito = '"+listaDistritos.get(i)+"' ";    
                 listaTemp.add(consultaSQL);
                 listaTemp.add(whereSQL);
                 listaConsultas.add(listaTemp);
@@ -61,13 +61,15 @@ public class Consulta1Base implements Consulta1{
                                     + "inner join canton cant "
                                     + "on cant.idCanton = dist.idCanton "
                                     + "inner join fecha fec "
-                                    + "on fec.idFecha = inc.idFecha ";
+                                    + "on fec.idFecha = inc.idFecha "
+                                    + "inner join afectado afec "
+                                    + "on inc.idAfectado = afec.idAfectado ";
                     
             where=where + "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
             
             for (int i=0; i<largoCantones; i++){
                 ArrayList<String> listaTemp = new ArrayList<>();
-                String whereSQL=where+" and cant.Canton = "+listaCantones.get(i);
+                String whereSQL=where+" and cant.Canton = '"+listaCantones.get(i)+"' ";
                 listaTemp.add(consultaSQL);
                 listaTemp.add(whereSQL);
                 listaConsultas.add(listaTemp);
@@ -80,15 +82,17 @@ public class Consulta1Base implements Consulta1{
                                     + "on dist.idDistrito = inc.idDistrito "
                                     + "inner join canton cant "
                                     + "on cant.idCanton = dist.idCanton "
-                                    + "inner join pronvinca prov "
+                                    + "inner join provincia prov "
                                     + "on prov.idProvincia = cant.idProvincia "
                                     + "inner join fecha fec "
-                                    + "on fec.idFecha = inc.idFecha ";
+                                    + "on fec.idFecha = inc.idFecha "
+                                    + "inner join afectado afec "
+                                    + "on inc.idAfectado = afec.idAfectado ";
             
             where=where+ "where fec.anno between "+Integer.toString(annoInicial)+" and "+Integer.toString(annoFinal);
             for (int i=0; i<largoProvincias; i++){
                 ArrayList<String> listaTemp = new ArrayList<>();
-                String whereSQL=where+" and prov.Provincia = "+listaProvincias.get(i);
+                String whereSQL=where+" and prov.Provincia = '"+listaProvincias.get(i)+"' ";
                 listaTemp.add(consultaSQL);
                 listaTemp.add(whereSQL);
                 listaConsultas.add(listaTemp);

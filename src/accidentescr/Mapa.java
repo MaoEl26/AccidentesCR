@@ -27,14 +27,14 @@ public class Mapa extends MapView{
     public Mapa(String name, DTOConsulta1 dtoConsulta1){
         JFrame frame = new JFrame(name);
         lugares = dtoConsulta1.getListaRespuestas();
-        System.out.println("voy1");
+        ///System.out.println("voy1");
         
         setOnMapReadyHandler(new MapReadyHandler(){
             @Override
             public void onMapReady(MapStatus status) {
             
                 if( status == MapStatus.MAP_STATUS_OK){
-                    System.out.println("voy2");
+                    //System.out.println("voy2");
                     map = getMap();
                     
                     MapOptions mapOptions = new MapOptions();

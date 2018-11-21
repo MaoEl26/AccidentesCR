@@ -6,11 +6,16 @@
 package accidentescr;
 
 import Conexion.BDConexion;
+import Controller.Controlador;
+import Controller.DTOConsulta2;
+import Model.RespuestaConsulta2;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.jfree.chart.ChartFactory;
@@ -33,6 +38,7 @@ public class paginaGrafico extends javax.swing.JFrame {
     DefaultPieDataset dataset;
     Connection conexionBD;
     PreparedStatement statement;
+    ArrayList<String> indicadores = new ArrayList(Arrays.asList("EdadQuinquenal","Sexo","Lesion","Rol"));
     ResultSet rs = null;
     public paginaGrafico(paginaInicio ventanaInicio) {
         initComponents();
@@ -271,27 +277,20 @@ public class paginaGrafico extends javax.swing.JFrame {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-       /*Enviar datos y obtener resultset*/ 
-       boolean retorno = false;
-       //esto es lo que necesito para trabajar....
-        try {
-            String sql = "select count(a.idAfectado),l.tipo,s.Sexo from afectado a inner join lesion l on a.idLesion = l.idLesion inner join sexo s on s.idSexo = a.idSexo group by l.tipo,s.Sexo";
-            conexionBD = BDConexion.obtenerConexion();
-            statement = conexionBD.prepareStatement(sql);
-            rs = statement.executeQuery();
-            retorno = true;
-        } catch (SQLException ex) {
-            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
+       /*Enviar datos y obtener resultset*/
+        DTOConsulta2 consulta;
+        Controlador controlador = new Controlador();
+        String consultaSQL = "";
+        RespuestaConsulta2 respuesta = new RespuestaConsulta2() ;
+        String indicador = indicadores.get(listTipoIndicador.getSelectedIndex());
+        consulta = new DTOConsulta2(indicador, consultaSQL, respuesta);
+        controlador.procesarConsulta2(consulta);
+/*
        if(retorno){
            dataset = new DefaultPieDataset();
            try {
                while(rs.next()){
-                   dataset.setValue(rs.getInt(1), rs.getString(2),
-                           rs.getString(3));//pos 1 count, pos 2 barra, pos 3 indicador
+                   dataset.setValue(rs.getString(2),rs.getInt(1));//pos 1 count, pos 2 barra, pos 3 indicador
                }
            } catch (SQLException ex) {
                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
@@ -302,7 +301,7 @@ public class paginaGrafico extends javax.swing.JFrame {
            ChartPanel panel = new ChartPanel(grafico);
            panelGrafico.add(panel);
            panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
-      }
+      }*/
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void acercaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acercaMenuMouseClicked
@@ -323,7 +322,6 @@ public class paginaGrafico extends javax.swing.JFrame {
     private void listTipoIndicadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTipoIndicadorMouseClicked
         // TODO add your handling code here:
         String sql;
-        System.out.println(listTipoIndicador.getSelectedIndex());
         listIndicador.removeAll();
         if(listTipoIndicador.getSelectedIndex()==0){
             sql = "Select Descripcion from edadquinquenal order by Descripcion";
@@ -376,7 +374,7 @@ public class paginaGrafico extends javax.swing.JFrame {
     }//GEN-LAST:event_listTipoIndicadorMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        cerrarConexion();
+        //cerrarConexion();
     }//GEN-LAST:event_formWindowClosed
 
 

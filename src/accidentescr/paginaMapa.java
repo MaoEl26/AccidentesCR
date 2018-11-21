@@ -120,7 +120,6 @@ public class paginaMapa extends javax.swing.JFrame {
         labelRangoEdad = new javax.swing.JLabel();
         listRangoEdad = new java.awt.List();
         jPanelMap = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
         btnBuscar = new javax.swing.JButton();
         barraInicio = new javax.swing.JMenuBar();
         pagInicio = new javax.swing.JMenu();
@@ -206,24 +205,15 @@ public class paginaMapa extends javax.swing.JFrame {
 
         jPanelMap.setBackground(new java.awt.Color(117, 104, 103));
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jTextField1.setText("Cuadro Provisional AQUI MAPA");
-
         javax.swing.GroupLayout jPanelMapLayout = new javax.swing.GroupLayout(jPanelMap);
         jPanelMap.setLayout(jPanelMapLayout);
         jPanelMapLayout.setHorizontalGroup(
             jPanelMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMapLayout.createSequentialGroup()
-                .addGap(187, 187, 187)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 622, Short.MAX_VALUE)
         );
         jPanelMapLayout.setVerticalGroup(
             jPanelMapLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelMapLayout.createSequentialGroup()
-                .addGap(129, 129, 129)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(317, Short.MAX_VALUE))
+            .addGap(0, 481, Short.MAX_VALUE)
         );
 
         btnBuscar.setBackground(new java.awt.Color(213, 214, 210));
@@ -436,7 +426,7 @@ public class paginaMapa extends javax.swing.JFrame {
         listaCantones.addAll(Arrays.asList(aux));
         aux = listDistrito.getSelectedItems();
         listaDistritos.addAll(Arrays.asList(aux));
-        System.out.println(listaDistritos);
+       
         aux = listInvolucrados.getSelectedItems();
         for (String aux1 : aux) {
             listaIndicadores.add(new ArrayList<>(Arrays.asList("Rol", aux1)));
@@ -453,23 +443,10 @@ public class paginaMapa extends javax.swing.JFrame {
         for (String aux1 : aux) {
             listaIndicadores.add(new ArrayList<>(Arrays.asList("Sexo", aux1)));
         }
+        
         consulta = new DTOConsulta1(listaProvincias, listaCantones, listaDistritos, 
                 annoInicial, annoFinal, listaIndicadores, listaConsultasSQL, listaRespuestas);
         controlador.procesarConsulta1(consulta);
-        /*Mapa mapa;
-        RespuestaConsulta1 res = new RespuestaConsulta1("9 56 11","-84 4 28", 2);
-        RespuestaConsulta1 res2 = new RespuestaConsulta1("09 54 00","-84 04 01", 5);
-        ArrayList arr = new ArrayList<RespuestaConsulta1>();
-        arr.add(res);
-        arr.add(res2);
-        mapa = new Mapa("Prueba",arr);
-        System.out.println("vo");
-        mapa.setVisible(true);*/
-        /*paginaMapa mapa;
-        mapa = new paginaMapa(this);
-        mapa.setVisible(true);
-        this.setVisible(false);
-        this.setEnabled(false);*/
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void pagInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagInicioMouseClicked
@@ -533,7 +510,7 @@ public class paginaMapa extends javax.swing.JFrame {
     }//GEN-LAST:event_listProvinciaMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        cerrarConexion();
+        //cerrarConexion();
     }//GEN-LAST:event_formWindowClosed
 
     private void listCantonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listCantonMouseClicked
@@ -574,7 +551,6 @@ public class paginaMapa extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
     private javax.swing.JPanel jPanelMap;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel labelCanton;
     private javax.swing.JLabel labelDistrito;
     private javax.swing.JLabel labelInvolucrados;

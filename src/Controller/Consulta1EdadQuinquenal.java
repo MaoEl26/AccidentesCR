@@ -44,7 +44,7 @@ public class Consulta1EdadQuinquenal extends Decorator{
                     + "inner join edadQuinquenal " 
                     + "on edadQuinquenal.idEdadQuinquenal = afec.idEdadQuinquenal ";
             String whereSQL = dtoConsulta1.getListaConsultasSQL().get(i).get(1) + ""
-                    + "and edadQuinquenal.Descripcion = " + edadQuinquenal+" ";
+                    + "and edadQuinquenal.Descripcion = '" + edadQuinquenal+"' ";
             listaTemp.add(consultaSQL);
             listaTemp.add(whereSQL);
             listaConsultasSQL.add(listaTemp);

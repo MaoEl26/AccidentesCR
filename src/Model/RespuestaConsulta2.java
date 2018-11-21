@@ -20,6 +20,10 @@ public class RespuestaConsulta2 implements Respuesta{
         this.indicador = indicador;
         this.count = count;
     }
+    
+    public RespuestaConsulta2(){
+        
+    }
 
     public String getIndicador() {
         return indicador;

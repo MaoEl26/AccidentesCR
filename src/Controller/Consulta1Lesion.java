@@ -43,7 +43,7 @@ public class Consulta1Lesion extends Decorator {
                     + "inner join lesion " 
                     + "on lesion.idLesion = afec.idLesion ";
             String whereSQL = dtoConsulta1.getListaConsultasSQL().get(i).get(1) + ""
-                    + "and lesion.Lesion = " + lesion+" ";
+                    + "and lesion.Lesion = '" + lesion+"' ";
             listaTemp.add(consultaSQL);
             listaTemp.add(whereSQL);
             listaConsultasSQL.add(listaTemp);

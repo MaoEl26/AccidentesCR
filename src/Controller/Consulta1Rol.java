@@ -43,7 +43,7 @@ public class Consulta1Rol extends Decorator{
                     + "inner join rol " 
                     + "on rol.idRol = afec.idRol ";
             String whereSQL = dtoConsulta1.getListaConsultasSQL().get(i).get(1) + ""
-                    + "and rol.Rol = " + rol+" ";
+                    + "and rol.Rol = '" + rol+"' ";
             listaTemp.add(consultaSQL);
             listaTemp.add(whereSQL);
             listaConsultasSQL.add(listaTemp);

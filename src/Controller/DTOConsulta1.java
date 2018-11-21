@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.RespuestaConsulta1;
 import java.util.ArrayList;
 
 /**
@@ -20,9 +21,9 @@ public class DTOConsulta1 {
     private int annoFinal;
     private ArrayList<ArrayList<String>> listaIndicadores;
     private ArrayList<ArrayList<String>> listaConsultasSQL;
-    private ArrayList<String> listaRespuestas;
+    private ArrayList<RespuestaConsulta1> listaRespuestas;
 
-    public DTOConsulta1(ArrayList<String> listaProvincias, ArrayList<String> listaCantones, ArrayList<String> listaDistritos, int annoInicial, int annoFinal, ArrayList<ArrayList<String>> listaIndicadores, ArrayList<ArrayList<String>> listaConsultasSQL, ArrayList<String> listaRespuestas) {
+    public DTOConsulta1(ArrayList<String> listaProvincias, ArrayList<String> listaCantones, ArrayList<String> listaDistritos, int annoInicial, int annoFinal, ArrayList<ArrayList<String>> listaIndicadores, ArrayList<ArrayList<String>> listaConsultasSQL, ArrayList<RespuestaConsulta1> listaRespuestas) {
         this.listaProvincias = listaProvincias;
         this.listaCantones = listaCantones;
         this.listaDistritos = listaDistritos;
@@ -91,11 +92,11 @@ public class DTOConsulta1 {
         this.listaConsultasSQL = listaConsultasSQL;
     }
 
-    public ArrayList<String> getListaRespuestas() {
+    public ArrayList<RespuestaConsulta1> getListaRespuestas() {
         return listaRespuestas;
     }
 
-    public void setListaRespuestas(ArrayList<String> listaRespuestas) {
+    public void setListaRespuestas(ArrayList<RespuestaConsulta1> listaRespuestas) {
         this.listaRespuestas = listaRespuestas;
     }
     

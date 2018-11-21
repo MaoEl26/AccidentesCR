@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import Model.RespuestaConsulta2;
 import java.util.ArrayList;
 
 /**
@@ -15,9 +16,9 @@ public class DTOConsulta2 {
     
     private String indicador;
     private String consultaSQL;
-    private ArrayList<String> listaRespuestas;
+    private ArrayList<RespuestaConsulta2> listaRespuestas;
 
-    public DTOConsulta2(String indicador, String consultaSQL, ArrayList<String> listaRespuestas) {
+    public DTOConsulta2(String indicador, String consultaSQL, ArrayList<RespuestaConsulta2> listaRespuestas) {
         this.indicador = indicador;
         this.consultaSQL = consultaSQL;
         this.listaRespuestas = listaRespuestas;
@@ -41,11 +42,11 @@ public class DTOConsulta2 {
         this.consultaSQL = consultaSQL;
     }
 
-    public ArrayList<String> getListaRespuestas() {
+    public ArrayList<RespuestaConsulta2> getListaRespuestas() {
         return listaRespuestas;
     }
 
-    public void setListaRespuestas(ArrayList<String> listaRespuestas) {
+    public void setListaRespuestas(ArrayList<RespuestaConsulta2> listaRespuestas) {
         this.listaRespuestas = listaRespuestas;
     }
     

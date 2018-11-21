@@ -67,6 +67,7 @@ public class DAOBD {
     
     public void consulta2BD(DTOConsulta2 dtoConsulta2){
         String consultaFinal = dtoConsulta2.getConsultaSQL();
+        ArrayList<RespuestaConsulta2> listaRespuestas = new ArrayList<>(); 
         
         //System.out.println(consultaFinal);
                 
@@ -81,7 +82,7 @@ public class DAOBD {
                 int count =rs.getInt(1);               //Valor de la base
                 System.exit(0);
                 RespuestaConsulta2 res2 = new RespuestaConsulta2(indicador, count);
-                dtoConsulta2.setRespuesta(res2);
+                listaRespuestas.add(res2);
             }
         } catch (SQLException ex) {
             Logger.getLogger(DAOBD.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,12 +90,7 @@ public class DAOBD {
             Logger.getLogger(DAOBD.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        /*String indicador ="";       //Valor de la base
-        int count =0;               //Valor de la base
-        
-        RespuestaConsulta2 res2 = new RespuestaConsulta2(indicador, count);
-        
-        dtoConsulta2.setRespuesta(res2);*/        
+        dtoConsulta2.setListaRespuestas(listaRespuestas);
     }
     
     public void consulta3BD(DTOConsulta3 dtoConsulta3){

@@ -281,9 +281,9 @@ public class paginaGrafico extends javax.swing.JFrame {
         DTOConsulta2 consulta;
         Controlador controlador = new Controlador();
         String consultaSQL = "";
-        RespuestaConsulta2 respuesta = new RespuestaConsulta2() ;
+        ArrayList<RespuestaConsulta2> listaRespuestas = new ArrayList<>();
         String indicador = indicadores.get(listTipoIndicador.getSelectedIndex());
-        consulta = new DTOConsulta2(indicador, consultaSQL, respuesta);
+        consulta = new DTOConsulta2(indicador, consultaSQL, listaRespuestas);
         controlador.procesarConsulta2(consulta);
 /*
        if(retorno){

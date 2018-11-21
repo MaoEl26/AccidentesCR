@@ -5,6 +5,7 @@
  */
 package accidentescr;
 
+import Controller.DTOConsulta1;
 import Model.RespuestaConsulta1;
 import com.teamdev.jxmaps.*;
 import com.teamdev.jxmaps.MapReadyHandler;
@@ -23,9 +24,9 @@ public class Mapa extends MapView{
     private Map map;
     ArrayList<RespuestaConsulta1> lugares;
     
-    public Mapa(String name, ArrayList<RespuestaConsulta1> res){
+    public Mapa(String name, DTOConsulta1 dtoConsulta1){
         JFrame frame = new JFrame(name);
-        lugares = res;
+        lugares = dtoConsulta1.getListaRespuestas();
         System.out.println("voy1");
         
         setOnMapReadyHandler(new MapReadyHandler(){

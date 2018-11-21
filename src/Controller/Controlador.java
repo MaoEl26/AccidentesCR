@@ -35,9 +35,9 @@ public class Controlador {
         DAOBD daoBD = new DAOBD();
         daoBD.consulta1BD(dtoConsulta1);
         
-        /*Mapa mapa;
+        Mapa mapa;
         mapa = new Mapa("Mapa Gráfico : Consulta 1",dtoConsulta1);
-        mapa.setVisible(true);*/
+        mapa.setVisible(true);
     }
     
     public void formularConsulta2(DTOConsulta2 dtoConsulta2){

@@ -320,7 +320,7 @@ public class paginaMapa extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.setAlwaysOnTop(false); //dejar este línea para que no tenga problemas con la nueva ventana de mapa
         
-        Mapa mapa;
+        /*Mapa mapa;
         RespuestaConsulta1 res = new RespuestaConsulta1("9 56 11","-84 4 28", 2);
         RespuestaConsulta1 res2 = new RespuestaConsulta1("09 54 00","-84 04 01", 5);
         ArrayList arr = new ArrayList<RespuestaConsulta1>();
@@ -328,7 +328,7 @@ public class paginaMapa extends javax.swing.JFrame {
         arr.add(res2);
         mapa = new Mapa("Prueba",arr);
         System.out.println("vo");
-        mapa.setVisible(true);
+        mapa.setVisible(true);*/
         
         /*paginaMapa mapa;
         mapa = new paginaMapa(this);

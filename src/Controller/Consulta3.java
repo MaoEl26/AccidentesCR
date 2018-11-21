@@ -9,24 +9,24 @@ package Controller;
  *
  * @author andre
  */
-public class DTOConsulta3 {
+public class Consulta3 {
     
     private String sexo;
-    private String consultaSQL;
-
-    public DTOConsulta3(String sexo) {
-        this.sexo = sexo;
-    }
+    private Observer observer;
     
-    
-
-    public String getSexo() {
+    public String getSexo(){
         return sexo;
     }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
+    
+    public void setSexo(DTOConsulta3 dtoConsulta3){
+        sexo = dtoConsulta3.getSexo();
+        notificar(dtoConsulta3);
     }
+    
+    public void notificar(DTOConsulta3 dtoConsulta3){
+        observer.update(dtoConsulta3);
+    }
+    
     
     
     

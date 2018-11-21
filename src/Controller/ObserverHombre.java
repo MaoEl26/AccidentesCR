@@ -9,9 +9,15 @@ package Controller;
  *
  * @author andre
  */
-public abstract class Observer {
+public class ObserverHombre extends Observer{
     
-    protected Consulta3 c3;
-    public abstract void update(DTOConsulta3 dtoConsulta3);
+    public ObserverHombre(Consulta3 consulta3){
+        this.c3 = consulta3;
+    }
+
+    @Override
+    public void update(DTOConsulta3 dtoConsulta3) {
+        /*Consulta SQL para el hombre*/
+    }
     
 }

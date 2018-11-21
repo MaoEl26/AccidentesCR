@@ -18,6 +18,7 @@ import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 /**
  *
@@ -29,7 +30,7 @@ public class paginaGrafico extends javax.swing.JFrame {
      * Creates new form paginaGrafico
      */
     private paginaInicio ventanaInicio;
-    DefaultCategoryDataset dataset;
+    DefaultPieDataset dataset;
     Connection conexionBD;
     PreparedStatement statement;
     ResultSet rs = null;
@@ -286,7 +287,7 @@ public class paginaGrafico extends javax.swing.JFrame {
         }
 
        if(retorno){
-           dataset = new DefaultCategoryDataset();
+           dataset = new DefaultPieDataset();
            try {
                while(rs.next()){
                    dataset.setValue(rs.getInt(1), rs.getString(2),
@@ -296,9 +297,8 @@ public class paginaGrafico extends javax.swing.JFrame {
                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
            }
            
-           JFreeChart grafico = ChartFactory.createBarChart3D("Gráfico por tipor de indicador", 
-                   "Indicador", 
-                   "Cantidad de incidencias", dataset, PlotOrientation.HORIZONTAL, true, false, false);
+           JFreeChart grafico = ChartFactory.createPieChart3D("Gráfico por tipor de indicador", 
+                   dataset, true, false, false);
            ChartPanel panel = new ChartPanel(grafico);
            panelGrafico.add(panel);
            panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());

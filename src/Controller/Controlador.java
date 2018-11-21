@@ -100,7 +100,9 @@ public class Controlador {
     }
     
     public void procesarConsulta3(DTOConsulta3 dtoConsulta3){
-        
+        formularConsulta3(dtoConsulta3);
+        DAOBD daoBD = new DAOBD();
+        daoBD.consulta3BD(dtoConsulta3);
     }
     
 }

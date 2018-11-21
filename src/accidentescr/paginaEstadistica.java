@@ -5,19 +5,16 @@
  */
 package accidentescr;
 
-import Conexion.BDConexion;
+import Controller.Controlador;
+import Controller.DTOConsulta3;
+import Model.RespuestaConsulta3;
 import java.awt.Color;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+import java.util.Arrays;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 /**
  *
  * @author mcv26
@@ -28,15 +25,22 @@ public class paginaEstadistica extends javax.swing.JFrame {
      * Creates new form paginaEstadistica
      */
     paginaInicio ventanaInicio;
-    DefaultCategoryDataset dataset;
+    DefaultPieDataset dataset;
+    ArrayList<String> indicadores = new ArrayList(Arrays.asList("Hombre","Mujer"));
     public paginaEstadistica(paginaInicio ventanaInicio) {
         initComponents();
         this.setTitle("Incidentes de Transito en Costa Rica");
         Color color = new Color(53,60,63);
         this.getContentPane().setBackground(color);
         this.ventanaInicio = ventanaInicio;
+        llenadoDatos();
     }
-
+    
+    private void llenadoDatos(){
+        listSexo.add("Hombre");
+        listSexo.add("Mujer");
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -46,8 +50,8 @@ public class paginaEstadistica extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelRangoTiempo = new javax.swing.JLabel();
-        listRangoTiempo = new java.awt.List();
+        labelSexo = new javax.swing.JLabel();
+        listSexo = new java.awt.List();
         btnBuscar = new javax.swing.JButton();
         panelGrafico = new javax.swing.JPanel();
         barraInicio = new javax.swing.JMenuBar();
@@ -61,11 +65,9 @@ public class paginaEstadistica extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        labelRangoTiempo.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
-        labelRangoTiempo.setForeground(new java.awt.Color(255, 141, 63));
-        labelRangoTiempo.setText("Tipo Indicador");
-
-        listRangoTiempo.setMultipleMode(true);
+        labelSexo.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
+        labelSexo.setForeground(new java.awt.Color(255, 141, 63));
+        labelSexo.setText("Sexo");
 
         btnBuscar.setBackground(new java.awt.Color(213, 214, 210));
         btnBuscar.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
@@ -166,16 +168,16 @@ public class paginaEstadistica extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(labelRangoTiempo))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
                                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(18, 18, 18)
+                            .addComponent(listSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addComponent(labelSexo)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(panelGrafico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -185,10 +187,10 @@ public class paginaEstadistica extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(132, 132, 132)
-                        .addComponent(labelRangoTiempo)
+                        .addComponent(labelSexo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(listSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(77, 77, 77)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -237,40 +239,26 @@ public class paginaEstadistica extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         /*Enviar datos y obtener resultset*/
-        boolean retorno = false;
-        Connection conexionBD;
-        PreparedStatement statement;
-        ResultSet rs = null;//esto es lo que necesito para trabajar....
-        try {
-            String sql = "select count(a.idAfectado),l.tipo,s.Sexo from afectado a inner join lesion l on a.idLesion = l.idLesion inner join sexo s on s.idSexo = a.idSexo group by l.tipo,s.Sexo";
-            conexionBD = BDConexion.obtenerConexion();
-            statement = conexionBD.prepareStatement(sql);
-            rs = statement.executeQuery();
-            retorno = true;
-        } catch (SQLException ex) {
-            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        if(retorno){
-            dataset = new DefaultCategoryDataset();
-            try {
-                while(rs.next()){
-                    dataset.setValue(rs.getInt(1), rs.getString(2),
-                        rs.getString(3));//pos 1 count, pos 2 barra, pos 3 indicador
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-            JFreeChart grafico = ChartFactory.createBarChart3D("Gráfico por tipor de indicador",
-                "Indicador",
-                "Cantidad de incidencias", dataset, PlotOrientation.HORIZONTAL, true, false, false);
-            ChartPanel panel = new ChartPanel(grafico);
-            panelGrafico.add(panel);
-            panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
-        }
+        DTOConsulta3 consulta;
+        Controlador controlador = new Controlador();
+        String consultaSQL = "";
+        ArrayList<RespuestaConsulta3> listaRespuestas = new ArrayList<>();
+        dataset = new DefaultPieDataset();
+        String indicador = indicadores.get(listSexo.getSelectedIndex());
+        consulta = new DTOConsulta3(indicador, consultaSQL, listaRespuestas);
+        controlador.procesarConsulta3(consulta);
+        
+        listaRespuestas = consulta.getListaRespuestas();
+        
+        for (int i = 0; i < listaRespuestas.size(); i++) {
+            dataset.setValue(listaRespuestas.get(i).getIndicador(), listaRespuestas.get(i).getCount());
+        }          
+        JFreeChart grafico = ChartFactory.createPieChart3D("Gráfico de Lesion por Sexo", 
+                dataset, true, true, false);
+        ChartPanel panel = new ChartPanel(grafico);
+        panelGrafico.removeAll();
+        panelGrafico.add(panel);
+        panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -281,8 +269,8 @@ public class paginaEstadistica extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultaMapa;
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
-    private javax.swing.JLabel labelRangoTiempo;
-    private java.awt.List listRangoTiempo;
+    private javax.swing.JLabel labelSexo;
+    private java.awt.List listSexo;
     private javax.swing.JMenu pagInicio;
     private javax.swing.JPanel panelGrafico;
     // End of variables declaration//GEN-END:variables

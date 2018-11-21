@@ -281,27 +281,29 @@ public class paginaGrafico extends javax.swing.JFrame {
         DTOConsulta2 consulta;
         Controlador controlador = new Controlador();
         String consultaSQL = "";
-        RespuestaConsulta2 respuesta = new RespuestaConsulta2() ;
+        dataset = new DefaultPieDataset();
+        //RespuestaConsulta2 respuesta = new RespuestaConsulta2() ;
         String indicador = indicadores.get(listTipoIndicador.getSelectedIndex());
-        consulta = new DTOConsulta2(indicador, consultaSQL, respuesta);
+        //ArrayList<String> listaIndicadores = new ArrayList<>();
+        ArrayList<RespuestaConsulta2> listaRespuestas = new ArrayList<>();
+        //ArrayList<ArrayList<String>> consultasSQL = new ArrayList<>();
+        
+        //String[] aux = listIndicador.getSelectedItems();
+        //listaIndicadores.addAll(Arrays.asList(aux));
+        
+        consulta = new DTOConsulta2(indicador, consultaSQL, listaRespuestas);
         controlador.procesarConsulta2(consulta);
-/*
-       if(retorno){
-           dataset = new DefaultPieDataset();
-           try {
-               while(rs.next()){
-                   dataset.setValue(rs.getString(2),rs.getInt(1));//pos 1 count, pos 2 barra, pos 3 indicador
-               }
-           } catch (SQLException ex) {
-               Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
-           }
-           
-           JFreeChart grafico = ChartFactory.createPieChart3D("Gráfico por tipor de indicador", 
-                   dataset, true, false, false);
-           ChartPanel panel = new ChartPanel(grafico);
-           panelGrafico.add(panel);
-           panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
-      }*/
+        
+        listaRespuestas = consulta.getRespuesta();
+        
+        
+                  
+        JFreeChart grafico = ChartFactory.createPieChart3D("Gráfico por tipor de indicador", 
+                dataset, true, false, false);
+        ChartPanel panel = new ChartPanel(grafico);
+        panelGrafico.add(panel);
+        panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
+      
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void acercaMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_acercaMenuMouseClicked

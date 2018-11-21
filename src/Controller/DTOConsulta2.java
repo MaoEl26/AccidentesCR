@@ -16,9 +16,9 @@ public class DTOConsulta2 {
     
     private String indicador;
     private String consultaSQL;
-    private RespuestaConsulta2 respuesta;
+    private ArrayList<RespuestaConsulta2> respuesta;
 
-    public DTOConsulta2(String indicador, String consultaSQL, RespuestaConsulta2 respuesta) {
+    public DTOConsulta2(String indicador, String consultaSQL, ArrayList<RespuestaConsulta2> respuesta) {
         this.indicador = indicador;
         this.consultaSQL = consultaSQL;
         this.respuesta = respuesta;

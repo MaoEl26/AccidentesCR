@@ -30,14 +30,40 @@ public class paginaGrafico extends javax.swing.JFrame {
      */
     private paginaInicio ventanaInicio;
     DefaultCategoryDataset dataset;
+    Connection conexionBD;
+    PreparedStatement statement;
+    ResultSet rs = null;
     public paginaGrafico(paginaInicio ventanaInicio) {
         initComponents();
         this.setTitle("Incidentes de Transito en Costa Rica");
         Color color = new Color(53,60,63);
         this.getContentPane().setBackground(color);
         this.ventanaInicio = ventanaInicio;
+        llenadoDatos();
     }
-
+    
+    private void llenadoDatos(){
+        listTipoIndicador.add("Rango de Edad");
+        listTipoIndicador.add("Sexo");
+        listTipoIndicador.add("Tipo de Lesión");
+        listTipoIndicador.add("Involucrado");
+        try {
+            conexionBD = BDConexion.obtenerConexion();
+        } catch (SQLException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void cerrarConexion(){
+        try {
+            conexionBD.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,10 +73,10 @@ public class paginaGrafico extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        labelRangoTiempo = new javax.swing.JLabel();
-        listRangoTiempo = new java.awt.List();
-        labelInvolucrados = new javax.swing.JLabel();
-        listInvolucrados = new java.awt.List();
+        labelTipoIndicador = new javax.swing.JLabel();
+        listTipoIndicador = new java.awt.List();
+        labelIndicador = new javax.swing.JLabel();
+        listIndicador = new java.awt.List();
         btnBuscar = new javax.swing.JButton();
         panelGrafico = new javax.swing.JPanel();
         barraInicio = new javax.swing.JMenuBar();
@@ -64,18 +90,27 @@ public class paginaGrafico extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(53, 60, 63));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        labelRangoTiempo.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
-        labelRangoTiempo.setForeground(new java.awt.Color(255, 141, 63));
-        labelRangoTiempo.setText("Tipo Indicador");
+        labelTipoIndicador.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
+        labelTipoIndicador.setForeground(new java.awt.Color(255, 141, 63));
+        labelTipoIndicador.setText("Tipo Indicador");
 
-        listRangoTiempo.setMultipleMode(true);
+        listTipoIndicador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listTipoIndicadorMouseClicked(evt);
+            }
+        });
 
-        labelInvolucrados.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
-        labelInvolucrados.setForeground(new java.awt.Color(255, 141, 63));
-        labelInvolucrados.setText("Indicador");
+        labelIndicador.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
+        labelIndicador.setForeground(new java.awt.Color(255, 141, 63));
+        labelIndicador.setText("Indicador");
 
-        listInvolucrados.setMultipleMode(true);
+        listIndicador.setMultipleMode(true);
 
         btnBuscar.setBackground(new java.awt.Color(213, 214, 210));
         btnBuscar.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
@@ -176,16 +211,13 @@ public class paginaGrafico extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(labelRangoTiempo)
+                    .addComponent(labelTipoIndicador)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listInvolucrados, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(24, 24, 24)
-                        .addComponent(labelInvolucrados)))
+                        .addComponent(labelIndicador))
+                    .addComponent(listIndicador, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(listTipoIndicador, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(panelGrafico, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -194,14 +226,14 @@ public class paginaGrafico extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(148, 148, 148)
-                .addComponent(labelRangoTiempo)
+                .addComponent(labelTipoIndicador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35)
-                .addComponent(labelInvolucrados)
+                .addComponent(listTipoIndicador, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23)
+                .addComponent(labelIndicador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(listInvolucrados, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40)
+                .addComponent(listIndicador, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(193, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
@@ -215,7 +247,8 @@ public class paginaGrafico extends javax.swing.JFrame {
 
     private void pagInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagInicioMouseClicked
         ventanaInicio.setVisible(true);
-        ventanaInicio.setEnabled(true);;
+        ventanaInicio.setEnabled(true);
+        //cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_pagInicioMouseClicked
 
@@ -223,6 +256,7 @@ public class paginaGrafico extends javax.swing.JFrame {
         paginaMapa mapa;
         mapa = new paginaMapa(ventanaInicio);
         mapa.setVisible(true);
+        //cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_consultaMapaActionPerformed
 
@@ -230,6 +264,7 @@ public class paginaGrafico extends javax.swing.JFrame {
         paginaGrafico grafico;
         grafico = new paginaGrafico(ventanaInicio);
         grafico.setVisible(true);
+        //}cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_consultaIndicadorActionPerformed
 
@@ -237,9 +272,7 @@ public class paginaGrafico extends javax.swing.JFrame {
         // TODO add your handling code here:
        /*Enviar datos y obtener resultset*/ 
        boolean retorno = false;
-       Connection conexionBD;
-       PreparedStatement statement;
-       ResultSet rs = null;//esto es lo que necesito para trabajar....
+       //esto es lo que necesito para trabajar....
         try {
             String sql = "select count(a.idAfectado),l.tipo,s.Sexo from afectado a inner join lesion l on a.idLesion = l.idLesion inner join sexo s on s.idSexo = a.idSexo group by l.tipo,s.Sexo";
             conexionBD = BDConexion.obtenerConexion();
@@ -287,6 +320,65 @@ public class paginaGrafico extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_consultaObserverActionPerformed
 
+    private void listTipoIndicadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listTipoIndicadorMouseClicked
+        // TODO add your handling code here:
+        String sql;
+        System.out.println(listTipoIndicador.getSelectedIndex());
+        listIndicador.removeAll();
+        if(listTipoIndicador.getSelectedIndex()==0){
+            sql = "Select Descripcion from edadquinquenal order by Descripcion";
+            try {
+                statement = conexionBD.prepareStatement(sql);
+                rs = statement.executeQuery();
+                while(rs.next()){
+                    listIndicador.add(rs.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        if(listTipoIndicador.getSelectedIndex()==1){
+            try {
+                sql = "Select Sexo from sexo";
+                statement = conexionBD.prepareStatement(sql);
+                rs = statement.executeQuery();
+                while(rs.next()){
+                    listIndicador.add(rs.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        if(listTipoIndicador.getSelectedIndex()==2){
+            try {
+                sql = "Select Tipo from lesion";
+                statement = conexionBD.prepareStatement(sql);
+                rs = statement.executeQuery();
+                while(rs.next()){
+                    listIndicador.add(rs.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+        if(listTipoIndicador.getSelectedIndex()==3){
+            try {
+                sql = "Select Rol from rol";
+                statement = conexionBD.prepareStatement(sql);
+                rs = statement.executeQuery();
+                while(rs.next()){
+                    listIndicador.add(rs.getString(1));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+            } 
+        }
+    }//GEN-LAST:event_listTipoIndicadorMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        cerrarConexion();
+    }//GEN-LAST:event_formWindowClosed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu acercaMenu;
@@ -296,10 +388,10 @@ public class paginaGrafico extends javax.swing.JFrame {
     private javax.swing.JMenuItem consultaMapa;
     private javax.swing.JMenuItem consultaObserver;
     private javax.swing.JMenu consultasMenu;
-    private javax.swing.JLabel labelInvolucrados;
-    private javax.swing.JLabel labelRangoTiempo;
-    private java.awt.List listInvolucrados;
-    private java.awt.List listRangoTiempo;
+    private javax.swing.JLabel labelIndicador;
+    private javax.swing.JLabel labelTipoIndicador;
+    private java.awt.List listIndicador;
+    private java.awt.List listTipoIndicador;
     private javax.swing.JMenu pagInicio;
     private javax.swing.JPanel panelGrafico;
     // End of variables declaration//GEN-END:variables

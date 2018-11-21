@@ -132,6 +132,9 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="windowClosed" listener="java.awt.event.WindowListener" parameters="java.awt.event.WindowEvent" handler="formWindowClosed"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -150,19 +153,14 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="labelRangoTiempo" min="-2" max="-2" attributes="0"/>
+                  <Component id="labelTipoIndicador" min="-2" max="-2" attributes="0"/>
                   <Component id="btnBuscar" alignment="0" min="-2" pref="166" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="listRangoTiempo" min="-2" pref="145" max="-2" attributes="0"/>
-                          <Component id="listInvolucrados" alignment="0" min="-2" pref="145" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Component id="labelInvolucrados" min="-2" max="-2" attributes="0"/>
+                      <Component id="labelIndicador" min="-2" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="listIndicador" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
+                  <Component id="listTipoIndicador" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="panelGrafico" max="32767" attributes="0"/>
@@ -174,14 +172,14 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="148" max="-2" attributes="0"/>
-              <Component id="labelRangoTiempo" min="-2" max="-2" attributes="0"/>
+              <Component id="labelTipoIndicador" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="listRangoTiempo" min="-2" pref="24" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Component id="labelInvolucrados" min="-2" max="-2" attributes="0"/>
+              <Component id="listTipoIndicador" min="-2" pref="36" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+              <Component id="labelIndicador" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="listInvolucrados" min="-2" pref="24" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+              <Component id="listIndicador" min="-2" pref="37" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
               <Component id="btnBuscar" min="-2" pref="38" max="-2" attributes="0"/>
               <EmptySpace pref="193" max="32767" attributes="0"/>
           </Group>
@@ -194,7 +192,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JLabel" name="labelRangoTiempo">
+    <Component class="javax.swing.JLabel" name="labelTipoIndicador">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Trajan Pro" size="20" style="3"/>
@@ -205,12 +203,12 @@
         <Property name="text" type="java.lang.String" value="Tipo Indicador"/>
       </Properties>
     </Component>
-    <Component class="java.awt.List" name="listRangoTiempo">
-      <Properties>
-        <Property name="multipleMode" type="boolean" value="true"/>
-      </Properties>
+    <Component class="java.awt.List" name="listTipoIndicador">
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="listTipoIndicadorMouseClicked"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="labelInvolucrados">
+    <Component class="javax.swing.JLabel" name="labelIndicador">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Trajan Pro" size="20" style="3"/>
@@ -221,7 +219,7 @@
         <Property name="text" type="java.lang.String" value="Indicador"/>
       </Properties>
     </Component>
-    <Component class="java.awt.List" name="listInvolucrados">
+    <Component class="java.awt.List" name="listIndicador">
       <Properties>
         <Property name="multipleMode" type="boolean" value="true"/>
       </Properties>

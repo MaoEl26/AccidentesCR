@@ -5,9 +5,20 @@
  */
 package accidentescr;
 
+import Conexion.BDConexion;
+import Controller.Controlador;
+import Controller.DTOConsulta1;
 import Model.RespuestaConsulta1;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +29,9 @@ public class paginaMapa extends javax.swing.JFrame {
     /**
      * Creates new form paginaMapa
      */
+    private Connection conexionBD;
+    private PreparedStatement statement = null;
+    private ResultSet rs = null;
     private paginaInicio ventanaInicio;
     public paginaMapa(paginaInicio ventanaInicio) {
         initComponents();
@@ -25,8 +39,61 @@ public class paginaMapa extends javax.swing.JFrame {
         Color color = new Color(53,60,63);
         this.getContentPane().setBackground(color);
         this.ventanaInicio = ventanaInicio;
+        llenadoDatos();
     }
-
+    
+    private void llenadoDatos(){
+        try {
+            String sql = "Select Sexo from sexo";
+            conexionBD = BDConexion.obtenerConexion();
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                listSexo.add(rs.getString(1));
+            }
+            sql = "Select distinct anno from fecha";
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                listRangoTiempo.add(rs.getString(1));
+            }
+            sql = "Select Rol from rol";
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                listInvolucrados.add(rs.getString(1));
+            }
+            sql = "Select Descripcion from edadquinquenal order by Descripcion";
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                listRangoEdad.add(rs.getString(1));
+            }
+            sql = "Select Tipo from lesion";
+            statement = conexionBD.prepareStatement(sql);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                listTipoLesion.add(rs.getString(1));
+            }
+            ArrayList<String> temporal = ventanaInicio.daoBD.getListaProvincias();
+            for (int i = 0; i < temporal.size(); i++) {
+                listProvincia.add(temporal.get(i));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    private void cerrarConexion(){
+        try {
+            conexionBD.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(paginaGrafico.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,6 +135,11 @@ public class paginaMapa extends javax.swing.JFrame {
         setBackground(new java.awt.Color(53, 60, 63));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
         labelProvincia.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
         labelProvincia.setForeground(new java.awt.Color(255, 141, 63));
@@ -78,8 +150,18 @@ public class paginaMapa extends javax.swing.JFrame {
         labelCanton.setText("Cantón ");
 
         listProvincia.setMultipleMode(true);
+        listProvincia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listProvinciaMouseClicked(evt);
+            }
+        });
 
         listCanton.setMultipleMode(true);
+        listCanton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                listCantonMouseClicked(evt);
+            }
+        });
 
         labelDistrito.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
         labelDistrito.setForeground(new java.awt.Color(255, 141, 63));
@@ -95,9 +177,14 @@ public class paginaMapa extends javax.swing.JFrame {
 
         labelInvolucrados.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
         labelInvolucrados.setForeground(new java.awt.Color(255, 141, 63));
-        labelInvolucrados.setText("Involucrados");
+        labelInvolucrados.setText("Involucrado");
 
         listInvolucrados.setMultipleMode(true);
+        listInvolucrados.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                listInvolucradosActionPerformed(evt);
+            }
+        });
 
         labelSexo.setFont(new java.awt.Font("Trajan Pro", 3, 20)); // NOI18N
         labelSexo.setForeground(new java.awt.Color(255, 141, 63));
@@ -226,82 +313,89 @@ public class paginaMapa extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(listInvolucrados, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelInvolucrados)
-                            .addComponent(listSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listTipoLesion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(listRangoEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(labelTipoLesion, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(labelRangoEdad))
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(42, 42, 42)
-                                .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32)
+                                .addComponent(labelSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listInvolucrados, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(listTipoLesion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(listSexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(listRangoEdad, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(8, 8, 8)
+                                .addComponent(labelInvolucrados)))
+                        .addGap(19, 19, 19)
                         .addComponent(jPanelMap, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelRangoTiempo)
-                            .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(63, 63, 63)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(labelProvincia)
-                            .addComponent(listProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(listCanton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelCanton))
-                        .addGap(43, 43, 43)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(labelDistrito))
-                            .addComponent(listDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(labelRangoTiempo)
+                                .addGap(63, 63, 63)
+                                .addComponent(labelProvincia)
+                                .addGap(29, 29, 29))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(listRangoTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(71, 71, 71)
+                                .addComponent(listProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                                .addComponent(labelCanton)
+                                .addGap(112, 112, 112)
+                                .addComponent(labelDistrito)
+                                .addGap(23, 23, 23))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(listCanton, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(listDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(layout.createSequentialGroup()
                             .addComponent(labelDistrito)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(listDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(listDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                         .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(labelCanton)
-                                .addComponent(labelProvincia))
+                            .addComponent(labelRangoTiempo)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(listProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(listCanton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(labelRangoTiempo)
+                            .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(labelCanton)
+                            .addComponent(labelProvincia))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listRangoTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(listProvincia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(listCanton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(labelInvolucrados)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listInvolucrados, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(22, 22, 22)
+                        .addComponent(listInvolucrados, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelSexo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
+                        .addComponent(listSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelTipoLesion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listTipoLesion, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addComponent(listTipoLesion, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(labelRangoEdad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(listRangoEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
+                        .addComponent(listRangoEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanelMap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
@@ -319,7 +413,49 @@ public class paginaMapa extends javax.swing.JFrame {
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
         this.setAlwaysOnTop(false); //dejar este línea para que no tenga problemas con la nueva ventana de mapa
+        DTOConsulta1 consulta;
+        Controlador controlador = new Controlador();
+        ArrayList<String> listaProvincias = new ArrayList<>();
+        ArrayList<String> listaCantones = new ArrayList<>();
+        ArrayList<String> listaDistritos = new ArrayList<>();
+        ArrayList<RespuestaConsulta1> listaRespuestas = new ArrayList<>();
+        ArrayList<ArrayList<String>> listaIndicadores = new ArrayList<>();
+        ArrayList<ArrayList<String>> listaConsultasSQL = new ArrayList<>();
+        int annoInicial,annoFinal;
         
+        if(listRangoTiempo.getSelectedIndexes().length>1){
+            annoInicial = Integer.parseInt(listRangoTiempo.getSelectedItems()[0]);
+            annoFinal = Integer.parseInt(listRangoTiempo.getSelectedItems()[listRangoTiempo.getSelectedItems().length]);
+        }else{
+            annoFinal = Integer.parseInt(listRangoTiempo.getSelectedItem());
+            annoInicial = Integer.parseInt(listRangoTiempo.getSelectedItem());
+        }
+        String[] aux = listProvincia.getSelectedItems();
+        listaProvincias.addAll(Arrays.asList(aux));
+        aux = listCanton.getSelectedItems();
+        listaCantones.addAll(Arrays.asList(aux));
+        aux = listDistrito.getSelectedItems();
+        listaDistritos.addAll(Arrays.asList(aux));
+        System.out.println(listaDistritos);
+        aux = listInvolucrados.getSelectedItems();
+        for (String aux1 : aux) {
+            listaIndicadores.add(new ArrayList<>(Arrays.asList("Rol", aux1)));
+        }
+        aux = listRangoEdad.getSelectedItems();
+        for (String aux1 : aux) {
+            listaIndicadores.add(new ArrayList<>(Arrays.asList("EdadQuinquenal", aux1)));
+        }
+        aux = listTipoLesion.getSelectedItems();
+        for (String aux1 : aux) {
+            listaIndicadores.add(new ArrayList<>(Arrays.asList("Lesion", aux1)));
+        }
+        aux = listSexo.getSelectedItems();
+        for (String aux1 : aux) {
+            listaIndicadores.add(new ArrayList<>(Arrays.asList("Sexo", aux1)));
+        }
+        consulta = new DTOConsulta1(listaProvincias, listaCantones, listaDistritos, 
+                annoInicial, annoFinal, listaIndicadores, listaConsultasSQL, listaRespuestas);
+        controlador.procesarConsulta1(consulta);
         /*Mapa mapa;
         RespuestaConsulta1 res = new RespuestaConsulta1("9 56 11","-84 4 28", 2);
         RespuestaConsulta1 res2 = new RespuestaConsulta1("09 54 00","-84 04 01", 5);
@@ -329,7 +465,6 @@ public class paginaMapa extends javax.swing.JFrame {
         mapa = new Mapa("Prueba",arr);
         System.out.println("vo");
         mapa.setVisible(true);*/
-        
         /*paginaMapa mapa;
         mapa = new paginaMapa(this);
         mapa.setVisible(true);
@@ -339,7 +474,8 @@ public class paginaMapa extends javax.swing.JFrame {
 
     private void pagInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pagInicioMouseClicked
         ventanaInicio.setVisible(true);
-        ventanaInicio.setEnabled(true);;
+        ventanaInicio.setEnabled(true);
+        //cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_pagInicioMouseClicked
 
@@ -347,6 +483,7 @@ public class paginaMapa extends javax.swing.JFrame {
         paginaGrafico grafico;
         grafico = new paginaGrafico(ventanaInicio);
         grafico.setVisible(true);
+        //cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_consultaIndicadorActionPerformed
 
@@ -354,6 +491,7 @@ public class paginaMapa extends javax.swing.JFrame {
         paginaAcerca acerca;
         acerca = new paginaAcerca(ventanaInicio);
         acerca.setVisible(true);
+        //cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_acercaMenuMouseClicked
 
@@ -362,8 +500,66 @@ public class paginaMapa extends javax.swing.JFrame {
         paginaEstadistica estadistica;
         estadistica = new paginaEstadistica(ventanaInicio);
         estadistica.setVisible(true);
+        //cerrarConexion();
         this.dispose();
     }//GEN-LAST:event_consultaObserverActionPerformed
+
+    private void listInvolucradosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_listInvolucradosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listInvolucradosActionPerformed
+
+    private void listProvinciaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listProvinciaMouseClicked
+        // TODO add your handling code here:
+        if(listProvincia.getSelectedIndexes().length == 1){
+            try {
+                String sql = "Select Canton from Canton inner join provincia on provincia.idProvincia = canton.idProvincia "
+                        + "where provincia.Provincia = '"+listProvincia.getSelectedItem()+"';";
+                conexionBD = BDConexion.obtenerConexion();
+                statement = conexionBD.prepareStatement(sql);
+                rs = statement.executeQuery();
+                while(rs.next()){
+                    listCanton.add(rs.getString(1));
+                }
+                listCanton.setEnabled(true);
+            }catch (SQLException ex) {
+                Logger.getLogger(paginaMapa.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(paginaMapa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            listCanton.removeAll();
+            listCanton.setEnabled(false);
+        }     
+    }//GEN-LAST:event_listProvinciaMouseClicked
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        cerrarConexion();
+    }//GEN-LAST:event_formWindowClosed
+
+    private void listCantonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_listCantonMouseClicked
+        // TODO add your handling code here:
+        if(listProvincia.getSelectedIndexes().length == 1 &&
+                listCanton.getSelectedIndexes().length == 1){
+            try {
+                String sql = "Select Distrito from Distrito inner join canton on distrito.idCanton = canton.idCanton "
+                        + "where canton.Canton = '"+listCanton.getSelectedItem()+"';";
+                conexionBD = BDConexion.obtenerConexion();
+                statement = conexionBD.prepareStatement(sql);
+                rs = statement.executeQuery();
+                while(rs.next()){
+                    listDistrito.add(rs.getString(1));
+                }
+                listDistrito.setEnabled(true);
+            }catch (SQLException ex) {
+                Logger.getLogger(paginaMapa.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(paginaMapa.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            listDistrito.removeAll();
+            listDistrito.setEnabled(false);
+        }     
+    }//GEN-LAST:event_listCantonMouseClicked
  
     /**
      * @param args the command line arguments

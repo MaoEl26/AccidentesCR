@@ -11,4 +11,6 @@ package Controller;
  */
 public interface Consulta2 {
     
+    public void crearConsulta(DTOConsulta2 dtoConsulta2);
+    
 }

@@ -10,5 +10,16 @@ package Controller;
  * @author andre
  */
 public class Consulta2Rol implements Consulta2{
+
+    @Override
+    public void crearConsulta(DTOConsulta2 dtoConsulta2) {
+        String consulta="select count(idAfectado), rol " +
+                        "from afectado " +
+                        "inner join rol " +
+                        "on afectado.idRol = rol.idRol " +
+                        "group by rol";
+       
+       dtoConsulta2.setConsultaSQL(consulta);
+    }
     
 }

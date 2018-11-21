@@ -10,5 +10,16 @@ package Controller;
  * @author andre
  */
 public class Consulta2EdadQuinquenal implements Consulta2{
+
+    @Override
+    public void crearConsulta(DTOConsulta2 dtoConsulta2) {
+        String consulta="select count(idAfectado), descripcion " +
+                        "from afectado " +
+                        "inner join edadQuinquenal " +
+                        "on afectado.idEdadQuinquenal = edadQuinquenal.idEdadQuinquenal " +
+                        "group by descripcion";
+       
+       dtoConsulta2.setConsultaSQL(consulta);
+    }
     
 }

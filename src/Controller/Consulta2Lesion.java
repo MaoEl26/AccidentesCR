@@ -9,6 +9,16 @@ package Controller;
  *
  * @author andre
  */
-public class Consulta2Lesion {
+public class Consulta2Lesion implements Consulta2{
+    
+    public void crearConsulta(DTOConsulta2 dtoConsulta2) {
+       String consulta="select count(idAfectado), tipo " +
+                        "from afectado " +
+                        "inner join lesion " +
+                        "on afectado.idLesion = lesion.idLesion " +
+                        "group by tipo";
+       
+       dtoConsulta2.setConsultaSQL(consulta);
+    }
     
 }

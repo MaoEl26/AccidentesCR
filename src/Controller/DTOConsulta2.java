@@ -16,12 +16,12 @@ public class DTOConsulta2 {
     
     private String indicador;
     private String consultaSQL;
-    private ArrayList<RespuestaConsulta2> listaRespuestas;
+    private RespuestaConsulta2 respuesta;
 
-    public DTOConsulta2(String indicador, String consultaSQL, ArrayList<RespuestaConsulta2> listaRespuestas) {
+    public DTOConsulta2(String indicador, String consultaSQL, RespuestaConsulta2 respuesta) {
         this.indicador = indicador;
         this.consultaSQL = consultaSQL;
-        this.listaRespuestas = listaRespuestas;
+        this.respuesta = respuesta;
     }
 
     
@@ -42,12 +42,12 @@ public class DTOConsulta2 {
         this.consultaSQL = consultaSQL;
     }
 
-    public ArrayList<RespuestaConsulta2> getListaRespuestas() {
-        return listaRespuestas;
+    public RespuestaConsulta2 getRespuesta() {
+        return respuesta;
     }
 
-    public void setListaRespuestas(ArrayList<RespuestaConsulta2> listaRespuestas) {
-        this.listaRespuestas = listaRespuestas;
+    public void setRespuesta(RespuestaConsulta2 respuesta) {
+        this.respuesta = respuesta;
     }
     
     

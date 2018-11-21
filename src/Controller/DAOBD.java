@@ -6,6 +6,8 @@
 package Controller;
 
 import Conexion.BDConexion;
+import Model.RespuestaConsulta1;
+import Model.RespuestaConsulta2;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,9 +28,48 @@ public class DAOBD {
     private HashMap<String,String> listaDistritos = new HashMap<>();
     
     public void consulta1BD(DTOConsulta1 dtoConsulta1){
+        ArrayList<ArrayList<String>> listaConsultasSQL = dtoConsulta1.getListaConsultasSQL();
+        ArrayList<RespuestaConsulta1> listaRespuestas = new ArrayList<>();
+        
+        
+        for(int i=0; i<listaConsultasSQL.size();i++){
+            String select = listaConsultasSQL.get(i).get(0);
+            String where = listaConsultasSQL.get(i).get(1);
+            String consultaFinal = select +" "+where;
+            
+            //System.out.println(consultaFinal);
+            
+            
+            /*Aqui se llama a la base de datos con la consulta que esta en consulta Final. 
+            Se puede imprimir para ver si esta bien*/
+            
+            String coordenadaX="";  //Valor obtenido de la consulta
+            String coordenadaY="";  //Valor obtenido de la consulta
+            int count =0;           //Valor obtenido de la consulta
+            
+            RespuestaConsulta1 res = new RespuestaConsulta1(coordenadaX, coordenadaY, count);
+            listaRespuestas.add(res);
+        }
+        dtoConsulta1.setListaRespuestas(listaRespuestas);
+        
     }
     
     public void consulta2BD(DTOConsulta2 dtoConsulta2){
+        String consultaFinal = dtoConsulta2.getConsultaSQL();
+        
+        //System.out.println(consultaFinal);
+                
+        /*Aqui se llama a la base de datos con la consulta que esta en consulta Final. 
+        Se puede imprimir para ver si esta bien*/
+        
+        String indicador ="";       //Valor de la base
+        int count =0;               //Valor de la base
+        
+        RespuestaConsulta2 res2 = new RespuestaConsulta2(indicador, count);
+        
+        dtoConsulta2.setRespuesta(res2);
+        
+        
     }
     
     public void consulta3BD(DTOConsulta3 dtoConsulta3){

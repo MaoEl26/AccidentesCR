@@ -81,9 +81,26 @@ public class Controlador {
     }
     
     public void formularConsulta3(DTOConsulta3 dtoConsulta3){
+        String indicador=dtoConsulta3.getSexo();
+        Observer observer;
+        Consulta3 consulta;
+        switch (indicador){
+            
+            case "Hombre":
+                observer= new ObserverHombre(dtoConsulta3);
+                consulta = new Consulta3(indicador,observer);
+                consulta.setSexo(dtoConsulta3);
+                break;
+            case "Mujer":
+                observer = new ObserverMujer(dtoConsulta3);
+                consulta = new Consulta3(indicador,observer);
+                consulta.setSexo(dtoConsulta3);
+                break;
+        }
     }
     
     public void procesarConsulta3(DTOConsulta3 dtoConsulta3){
+        
     }
     
 }

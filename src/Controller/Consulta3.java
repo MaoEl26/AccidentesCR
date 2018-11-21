@@ -14,6 +14,11 @@ public class Consulta3 {
     private String sexo;
     private Observer observer;
     
+    public Consulta3(String sexo, Observer observer){
+        this.sexo = sexo;
+        this.observer = observer;
+    }
+    
     public String getSexo(){
         return sexo;
     }

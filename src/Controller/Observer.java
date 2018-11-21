@@ -11,7 +11,7 @@ package Controller;
  */
 public abstract class Observer {
     
-    protected Consulta3 c3;
+    protected DTOConsulta3 c3;
     public abstract void update(DTOConsulta3 dtoConsulta3);
     
 }

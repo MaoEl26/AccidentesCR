@@ -8,6 +8,7 @@ package Controller;
 import Conexion.BDConexion;
 import Model.RespuestaConsulta1;
 import Model.RespuestaConsulta2;
+import Model.RespuestaConsulta3;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -93,6 +94,30 @@ public class DAOBD {
     }
     
     public void consulta3BD(DTOConsulta3 dtoConsulta3){
+        String consultaFinal = dtoConsulta3.getConsultaSQL();
+        ArrayList<RespuestaConsulta3> listaRespuestas = new ArrayList<>(); 
+        
+        //System.out.println(consultaFinal);
+                
+        /*Aqui se llama a la base de datos con la consulta que esta en consulta Final. 
+        Se puede imprimir para ver si esta bien*/
+         try {
+            conexionBD = BDConexion.obtenerConexion();
+            statement = conexionBD.prepareStatement(consultaFinal);
+            rs = statement.executeQuery();
+            while(rs.next()){
+                String indicador =rs.getString(2);       //Valor de la base
+                int count =rs.getInt(1);               //Valor de la base
+                RespuestaConsulta3 res2 = new RespuestaConsulta3(indicador, count);
+                listaRespuestas.add(res2);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DAOBD.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(DAOBD.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        dtoConsulta3.setListaRespuestas(listaRespuestas);
     }
 
     /**

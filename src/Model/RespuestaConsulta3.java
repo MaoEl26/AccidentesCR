@@ -10,5 +10,31 @@ package Model;
  * @author andre
  */
 public class RespuestaConsulta3 implements Respuesta{
+    private String indicador;
+    private int count;
+
+    public RespuestaConsulta3(String indicador, int count) {
+        this.indicador = indicador;
+        this.count = count;
+    }
     
+    public RespuestaConsulta3(){
+        
+    }
+
+    public String getIndicador() {
+        return indicador;
+    }
+
+    public void setIndicador(String indicador) {
+        this.indicador = indicador;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
 }

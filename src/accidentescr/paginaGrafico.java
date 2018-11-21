@@ -281,26 +281,21 @@ public class paginaGrafico extends javax.swing.JFrame {
         DTOConsulta2 consulta;
         Controlador controlador = new Controlador();
         String consultaSQL = "";
-        dataset = new DefaultPieDataset();
-        //RespuestaConsulta2 respuesta = new RespuestaConsulta2() ;
-        String indicador = indicadores.get(listTipoIndicador.getSelectedIndex());
-        //ArrayList<String> listaIndicadores = new ArrayList<>();
         ArrayList<RespuestaConsulta2> listaRespuestas = new ArrayList<>();
-        //ArrayList<ArrayList<String>> consultasSQL = new ArrayList<>();
-        
-        //String[] aux = listIndicador.getSelectedItems();
-        //listaIndicadores.addAll(Arrays.asList(aux));
-        
+        dataset = new DefaultPieDataset();
+        String indicador = indicadores.get(listTipoIndicador.getSelectedIndex());
         consulta = new DTOConsulta2(indicador, consultaSQL, listaRespuestas);
         controlador.procesarConsulta2(consulta);
         
-        listaRespuestas = consulta.getRespuesta();
+        listaRespuestas = consulta.getListaRespuestas();
         
-        
-                  
+        for (int i = 0; i < listaRespuestas.size(); i++) {
+            dataset.setValue(listaRespuestas.get(i).getIndicador(), listaRespuestas.get(i).getCount());
+        }          
         JFreeChart grafico = ChartFactory.createPieChart3D("Gráfico por tipor de indicador", 
-                dataset, true, false, false);
+                dataset, true, true, false);
         ChartPanel panel = new ChartPanel(grafico);
+        panelGrafico.removeAll();
         panelGrafico.add(panel);
         panel.setBounds(1, 1, panelGrafico.getWidth(), panelGrafico.getHeight());
       
